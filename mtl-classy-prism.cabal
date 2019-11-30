@@ -1,0 +1,73 @@
+cabal-version:          2.2
+name:                   mtl-classy-prism
+version:                0.1.0.0
+synopsis:               Extract html content
+build-type:             Simple
+data-dir:               resources
+author:                 Amy
+maintainer:             amy@justfrog.com
+
+library
+  hs-source-dirs:       src/lib
+  exposed-modules:      Prelude
+                      , Bootstrap
+                      , Bot.Client
+                      , Bot.Types
+                      , Config
+                      , Ipip.Parsers
+                      , Ipip.Types
+                      , Types
+  autogen-modules:      Paths_mtl_classy_prism
+  other-modules:        Paths_mtl_classy_prism
+  ghc-options:          -Wall -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
+  build-depends:        base-noprelude
+                      , aeson
+                      , attoparsec
+                      , dhall
+                      , email-validate
+                      , email-validate-json
+                      , exceptions
+                      , http-client
+                      , http-client-tls
+                      , http-types
+                      , lens
+                      , mtl
+                      , optparse-applicative
+                      , protolude
+                      , servant
+                      , servant-client
+                      , tagsoup
+                      , text
+  default-language:     Haskell2010
+
+executable mtl-classy-prism
+  main-is:              Main.hs
+  hs-source-dirs:       src/app
+  default-language:     Haskell2010
+  ghc-options:          -Wall -threaded
+  build-depends:        mtl-classy-prism
+
+test-suite tests
+  type:               exitcode-stdio-1.0
+  main-is:            tests.hs
+  hs-source-dirs:     src/test
+  other-modules:      Bot.TypeTest
+                    , ConfigTest
+                    , Ipip.ParserTest
+                    , Utils
+  default-language:   Haskell2010
+  autogen-modules:      Paths_mtl_classy_prism
+  other-modules:        Paths_mtl_classy_prism
+  ghc-options:        -Wall -threaded
+  build-depends:      mtl-classy-prism
+                    , base-noprelude
+                    , aeson
+                    , email-validate
+                    , hedgehog
+                    , lens
+                    , servant-client
+                    , tagsoup
+                    , tasty
+                    , tasty-hedgehog
+                    , tasty-hunit
+                    , text
