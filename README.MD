@@ -55,7 +55,7 @@ But this introduce other problems:
 
 We don't want a rigid monad stack making the function types tightly coupled with a particular client.  Abstraction bounded by type class constraints solves the problem.  MTL comes to the rescue.  
 
-3 MTL type classes are used for these functions - `MonadReader`, `MonadError` and `MonadIO`.  Now, improve these functions by using these type classes.
+3 MTL type classes are used for these functions - `MonadReader`, `MonadError` and `MonadIO`.
 
 ```
 parseIpipFile 
@@ -85,7 +85,7 @@ The resulting monad `m` will be bounded by the following constraints.
 ```
 MonadError e m, MonadReader BotEnv m, MonadIO m, AsOptError e, AsParseError e, AsHttpError e
 ```
-To find out a monad that satisfies the 3 class constraints in `bootstrap` function, one possible solution to check what type class instances are available.  The following instances are selected to give us some hints:
+To find out the monad stack that satisfies the 3 class constraints, one possible solution to check what type class instances are available.  The following instances are selected to give us some hints:
 ```
 instance [safe] MonadError e m 	=> MonadError e (ReaderT r m)   -- 1
 instance [safe] Monad m         => MonadError e (ExceptT e m)   -- 2
@@ -107,12 +107,12 @@ By using a similar skill, we find out `ExceptT e (ReaderT r IO)` also satisfies 
 
 ### Other advantages
 
-It is supported in other open-sourced libraries.  E.g. in `lens`
+It is supported in open-sourced libraries.  E.g. in `lens`
 ```
 view :: MonadReader s m => Getting a s a -> m a
 ```
 
-Another example is hedgehog.  The property-based test return type is `PropertyT IO ()`.
+Another example is `hedgehog`.  The property-based test return type is `PropertyT IO ()`.
 
 hedgehog provides the following type class instances
 ```
@@ -161,7 +161,7 @@ This doesn't make sense because in, say, `parseIpipFile`, `AppError` type means 
 
 ### Solution - classy prisms
 
-If we improve `parseIpipFile` by using classy prism
+Use classy prism on `parseIpipFile`
 ```
 parseIpipFile 
   :: (MonadError e m, AsParseError e, MonadIO m) 
