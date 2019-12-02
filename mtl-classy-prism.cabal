@@ -7,19 +7,12 @@ data-dir:               resources
 author:                 Amy
 maintainer:             amy@justfrog.com
 
-library
-  hs-source-dirs:       src/lib
-  exposed-modules:      Prelude
-                      , Bootstrap
-                      , Bot.Client
-                      , Bot.Types
-                      , Config
-                      , Ipip.Parsers
-                      , Ipip.Types
-                      , Types
-  autogen-modules:      Paths_mtl_classy_prism
-  other-modules:        Paths_mtl_classy_prism
-  ghc-options:          -Wall -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
+common lang
+  default-extensions: OverloadedStrings
+                    , RecordWildCards
+                    , BlockArguments
+
+common deps
   build-depends:        base-noprelude
                       , aeson
                       , attoparsec
@@ -38,16 +31,40 @@ library
                       , servant-client
                       , tagsoup
                       , text
+
+library
+  import:               lang, deps
+  hs-source-dirs:       src/lib
+  exposed-modules:      Prelude
+                      , Bootstrap
+                      , Bot.Client
+                      , Bot.Types
+                      , Config
+                      , Ipip.Parsers
+                      , Ipip.Types
+                      , Types
+  autogen-modules:      Paths_mtl_classy_prism
+  other-modules:        Paths_mtl_classy_prism
+  ghc-options:          -Wall -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
   default-language:     Haskell2010
 
 executable mtl-classy-prism
+  import:               lang, deps
   main-is:              Main.hs
   hs-source-dirs:       src/app
   default-language:     Haskell2010
   ghc-options:          -Wall -threaded
   build-depends:        mtl-classy-prism
 
+common test-deps
+  build-depends:      mtl-classy-prism
+                    , hedgehog
+                    , tasty
+                    , tasty-hedgehog
+                    , tasty-hunit
+
 test-suite tests
+  import:             lang, deps, test-deps
   type:               exitcode-stdio-1.0
   main-is:            tests.hs
   hs-source-dirs:     src/test
@@ -55,19 +72,7 @@ test-suite tests
                     , ConfigTest
                     , Ipip.ParserTest
                     , Utils
+                    , Paths_mtl_classy_prism
   default-language:   Haskell2010
-  autogen-modules:      Paths_mtl_classy_prism
-  other-modules:        Paths_mtl_classy_prism
+  autogen-modules:    Paths_mtl_classy_prism
   ghc-options:        -Wall -threaded
-  build-depends:      mtl-classy-prism
-                    , base-noprelude
-                    , aeson
-                    , email-validate
-                    , hedgehog
-                    , lens
-                    , servant-client
-                    , tagsoup
-                    , tasty
-                    , tasty-hedgehog
-                    , tasty-hunit
-                    , text

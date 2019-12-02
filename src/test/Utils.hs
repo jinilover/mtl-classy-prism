@@ -1,5 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
-
 -- | Utility functions that create data from tuple list 
 -- and shared by multiple tests
 module Utils where

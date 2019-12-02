@@ -1,7 +1,3 @@
-{-# LANGUAGE BlockArguments #-}
-{-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE OverloadedStrings #-}
-
 -- | Test the Json value of the personality result conform to the Recruitbot API requirement
 module Bot.TypeTest where
 

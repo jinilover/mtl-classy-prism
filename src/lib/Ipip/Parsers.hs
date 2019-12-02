@@ -1,6 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
-
 -- | Functions for parsing the html file of the personality test result.
 module Ipip.Parsers 
   ( ParseError(..)

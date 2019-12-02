@@ -16,9 +16,17 @@ mkDerivation {
     http-types lens mtl optparse-applicative protolude servant
     servant-client tagsoup text
   ];
+  executableHaskellDepends = [
+    aeson attoparsec base-noprelude dhall email-validate
+    email-validate-json exceptions http-client http-client-tls
+    http-types lens mtl optparse-applicative protolude servant
+    servant-client tagsoup text
+  ];
   testHaskellDepends = [
-    aeson base-noprelude email-validate hedgehog lens servant-client
-    tagsoup tasty tasty-hedgehog tasty-hunit text
+    aeson attoparsec base-noprelude dhall email-validate
+    email-validate-json exceptions hedgehog http-client http-client-tls
+    http-types lens mtl optparse-applicative protolude servant
+    servant-client tagsoup tasty tasty-hedgehog tasty-hunit text
   ];
   description = "Extract html content";
   license = "unknown";
